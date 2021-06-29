@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -O3 -DNDEBUG  -rdynamic CMakeFiles/powered_caster_vehicle.dir/src/main.cpp.o  -o powered_caster_vehicle -Wl,-rpath,/home/dyros/catkin_ws/src/powered_caster_vehicle/build libpowered_caster_vehicle_lib.so -lpthread -lrt 
