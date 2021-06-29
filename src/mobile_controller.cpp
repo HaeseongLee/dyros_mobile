@@ -73,7 +73,7 @@ void MobileController::printState()
       std::cout << std::fixed << std::setprecision(3) << q_.transpose() << std::endl;
       std::cout << "x   :\t";
       std::cout << std::fixed << std::setprecision(3) << x_.transpose() << std::endl;
-      // std::cout << "qd  :\t";
+      // std::cout << "qd  :\t"; 
       // std::cout << std::fixed << std::setprecision(3) << qd_.transpose() << std::endl;
       // std::cout << "t desired:\t";
     //		cout << std::fixed << std::setprecision(3) << torque_desired_.transpose() << endl;
