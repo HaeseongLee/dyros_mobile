@@ -5,13 +5,13 @@
 #include "mobile_controller.h"
 
 #include "linux_terminal_tool.h"
-// #define MODE(X,Y) case X: ac.setMode(Y); break;
+#define MODE(X,Y) case X: mc.setMode(Y); break;
 
 
 int main()
 {
-	// // VRepBridge vb(VRepBridge::CTRL_TORQUE); // Torque controlled
-	VRepBridge vb(VRepBridge::CTRL_POSITION); // Position controlled 
+	VRepBridge vb(VRepBridge::CTRL_TORQUE); // Torque controlled
+	// VRepBridge vb(VRepBridge::CTRL_POSITION); // Position controlled 
 	// VRepBridge vb((VRepBridge::ControlMode::CTRL_POSITION)
 	const double hz = 1000 ;
 	MobileController mc(hz);
@@ -46,7 +46,9 @@ int main()
 			switch (key)
 			{
 				// Implement with user input
-				// MODE('i', "joint_ctrl_init")
+				MODE('o', "op_control")
+				MODE('s', "steer_control")
+				MODE('w', "wheel_control")
 				case '\t':
 					if (is_simulation_run)
 					{
@@ -71,9 +73,9 @@ int main()
 		if (is_simulation_run) {
 			mc.compute();
 			// vb.setDesiredPosition(ac.getDesiredPosition());
-			// vb.setDesiredTorque(ac.getDesiredTorque());
+			vb.setDesiredJointTorque(mc.setDesiredJointTorque());
 		
-			// vb.write();
+			vb.write();
 			vb.simLoop();
 		}
 	}

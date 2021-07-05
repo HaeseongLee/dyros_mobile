@@ -21,14 +21,19 @@ class MobileController
         void setInitialJoint(const VectorQd &q, const VectorQd &q_dot);
         void setInitialBase(const Vector3d &x, const Vector3d  &x_dot);
 
+        VectorQd setDesiredJointTorque();
+
+        void init();
         void compute();
+
+        void setMode(const std::string & mode);
 
         Vehicle veh_;
 
         // JT-SPACE PARAMETERS(i.e., steer/wheel joint)        
         VectorQd q_, q_dot_, q_ddot_;   // phi, rho
         VectorQd q_init_, q_dot_init_;  // init values
-        VectorQd qd_, qd_dot, qd_ddot_;
+        VectorQd qd_, qd_dot_, qd_ddot_;
         VectorQd tau_, taud_;
         VectorQd q_dot_hat_; // computed by Jacobian
         
@@ -41,10 +46,14 @@ class MobileController
         // DYNAMICS PARAMETERS
         MatrixQtd J_;
         MatrixQd Jt_;
-        Matrix3d Lambda_;
-        Vector3d Mu_;
         MatrixQd C_; // wheel constraint matrix
-
+        Eigen::Matrix3d Lambda_;
+        Eigen::Vector3d Mu_;
+        
+        Eigen::Matrix<double, 8, 8> Kjp_, Kjv_;
+        Eigen::Matrix3d kp_, kv_;
+        Eigen::Vector3d f_star_zero_;
+        
         unsigned long tick_;
         double play_time_;
         double hz_;
@@ -56,5 +65,23 @@ class MobileController
 
     private:        
         void printState();
+        void saveState();
+        
+        // save current joint values
+        std::ofstream pcv_q {"pcv_q.txt"};
+        std::ofstream pcv_q_dot {"pcv_q_dot.txt"};
+
+        // save desired joint values
+        std::ofstream pcv_qd {"pcv_qd.txt"};
+        std::ofstream pcv_qd_dot {"pcv_qd_dot.txt"};
+        std::ofstream pcv_taud {"pcv_taud.txt"};
+
+        std::ofstream pcv_x {"pcv_x.txt"};
+        std::ofstream pcv_x_dot {"pcv_x_dot.txt"};
+
+        std::ofstream pcv_xd {"pcv_xd.txt"};
+        std::ofstream pcv_xd_dot {"pcv_xd_dot.txt"};
+        std::ofstream pcv_fd {"pcv_fd.txt"};
+
 
 };

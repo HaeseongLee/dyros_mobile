@@ -47,8 +47,7 @@ add_definitions (-DMAX_EXT_API_CONNECTIONS=255)
 # )
 
 set (SOURCES
-	# src/controller.cpp
-  src/main.cpp
+	src/main.cpp
   src/vrep_bridge.cpp
   src/caster.cpp
   src/vehicle.cpp
@@ -64,8 +63,6 @@ set (SOURCES
 )
 
 add_executable(powered_caster_vehicle ${SOURCES})
-# add_executable(pcv ${SOURCES})
-# add_executable(powered_caster_vehicle src/main.cpp)
 
 target_link_libraries(powered_caster_vehicle	
 	pthread

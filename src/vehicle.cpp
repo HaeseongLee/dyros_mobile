@@ -331,7 +331,6 @@ void Vehicle::Fill_Jcp(MatrixQtd &J)
 
 void Vehicle::Add_Solid(double _x, double _y, double _M, double _I)
 {
-
   // COMPUTE NEW veh QUANTITIES w/ ARGS AND PREVIOUS M & I
   X_veh_  = (M_veh_ * X_veh_ + _M * _x) / (M_veh_ + _M);
   Y_veh_  = (M_veh_ * Y_veh_ + _M * _y) / (M_veh_ + _M);

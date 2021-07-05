@@ -54,6 +54,16 @@
         "thread": "cpp",
         "cfenv": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
-    }
+        "typeinfo": "cpp",
+        "core": "cpp"
+    },
+    "cmake.configureOnOpen": true,
+    "python.autoComplete.extraPaths": [
+        "/home/dyros/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/dyros/catkin_ws/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ]
 }

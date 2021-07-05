@@ -104,9 +104,8 @@ void VRepBridge::write()
 					velocityLimit = -10e10f;
 
 				simxSetJointTargetVelocity(clientID_, motorHandle_[i], velocityLimit, simx_opmode_streaming);
-				simxSetJointForce(clientID_, motorHandle_[i], static_cast<float>(abs(taud_(i))), simx_opmode_streaming);
-
-			}
+				simxSetJointForce(clientID_, motorHandle_[i], static_cast<float>(abs(taud_(i))), simx_opmode_streaming);				
+			}	
 			break;
 		}
 	}
