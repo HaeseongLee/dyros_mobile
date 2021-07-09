@@ -565,5 +565,49 @@ namespace DyrosMath
 
 		return result;
 	}
+
+	static double lowPassFilter(const double input,
+								const double prev,
+								const double dt,
+								const double w)
+	{
+		double alpha, y;
+		
+		alpha = dt/(1/w + dt);
+
+		y = alpha*input + (1-alpha)*prev;
+		return y;
+	}
+
+	template <int N>
+	static Eigen::Matrix<double, N, 1> lowPassFilter(const Eigen::Matrix<double, N, 1> &input,
+													 const Eigen::Matrix<double, N, 1> &prev,
+													 const double dt,
+													 const double w)
+	{
+		Eigen::Matrix<double, N, 1> res;
+		for (int i = 0; i < N; i++)
+		{
+			res(i) = lowPassFilter(input(i), prev(i), dt, w);
+		}
+		return res;
+	}
+
+	static Eigen::Matrix3d getRotationZ(const double theta)
+	{
+		Eigen::Matrix3d rot_z;
+
+		rot_z.setZero();
+
+		rot_z(0,0) = cos(theta);
+		rot_z(0,1) = sin(theta);
+
+		rot_z(1,0) = -sin(theta);
+		rot_z(1,1) = cos(theta);
+
+		rot_z(2,2) = 1;
+
+		return rot_z;
+	}
 }
 #endif

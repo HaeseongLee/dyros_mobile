@@ -56,7 +56,8 @@ public:
                   double _Mp = XR_Mp, double _Ip = XR_Ip);
 
   void Fill_C(MatrixQd &C);
-  void Fill_Jcp(MatrixQtd &J);
+  void Fill_J(MatrixQtd &J);
+  void Fill_Jcp(MatrixQtd &J);  
   // void Fill_Jt_gamma(MatrixQd &Jt);
   // void Fill_E_p(MatrixXd &E);
   // void Fill_E_q(MatrixXd &E);

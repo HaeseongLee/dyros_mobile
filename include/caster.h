@@ -24,11 +24,11 @@ limitations under the License.
 #include "pcv_mtx_utils.h"
 
 
-#define XR_h  ( 0.2159)      // m
+#define XR_h  (0.2159)      // m
 #define XR_l  (0.215)
 #define XR_w  (0.125)
 
-#define XR_b  (-0.020*0.995) // m ( Dimension * Empirical_Calibration_Factor )
+#define XR_b  ( -0.020*0.995) // m ( Dimension * Empirical_Calibration_Factor )
 #define XR_r  ( 0.055*1.000) // m ( Dimension * Empirical_Calibration_Factor )
 
 #define XR_f  (-0.010)       // m

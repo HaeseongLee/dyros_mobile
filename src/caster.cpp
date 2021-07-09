@@ -109,12 +109,22 @@ void Caster::Fill_L_Pk()
  void Caster::Fill_Ce()  // Ce (C_theta) (a.k.a. Ji )
 {
   Ce(0,0) =  bi*s;
-  Ce(0,1) = -bi*c;
-  Ce(0,2) = -bi*(Kx*c + Ky*s) - 1.0;
-
+  Ce(0,1) =  -bi*c;
+  Ce(0,2) =  -bi*(Kx*c + Ky*s) - 1.0;
+  
+  // considering the relative pose of the wheel joint from the base
   Ce(1,0) =  ri*c;
   Ce(1,1) =  ri*s;
   Ce(1,2) =  ri*(Kx*s - Ky*c);
+
+  // Ce(0,0) =  -bi*s;
+  // Ce(0,1) =  bi*c;
+  // Ce(0,2) =  bi*(Kx*c + Ky*s) - 1.0;
+  
+  // // considering the relative pose of the wheel joint from the base
+  // Ce(1,0) =  -ri*c;
+  // Ce(1,1) =  -ri*s;
+  // Ce(1,2) =  -ri*(Kx*s - Ky*c);
 
   Ce(2,0) =  0.0;
   Ce(2,1) =  0.0;

@@ -165,9 +165,28 @@ void Vehicle::Fill_C(MatrixQd &C)
     C(j+1,0) =   ri*c;
     C(j+1,1) =   ri*s;
     C(j+1,2) =   ri*(Kx*s-Ky*c);
+
+    // C( j ,0) =  -bi*s;
+    // C( j ,1) =  bi*c;
+    // C( j ,2) =  bi*(Kx*c+Ky*s) - 1.0;
+
+    // C(j+1,0) =   -ri*c;
+    // C(j+1,1) =   -ri*s;
+    // C(j+1,2) =   -ri*(Kx*s-Ky*c);
   }
 }
 
+// compute psedo inverse of the Jacobian
+void Vehicle::Fill_J(MatrixQtd &J)
+{
+  MatrixQd C;
+  MatrixQtd Ct;
+  
+  Fill_C(C);
+  Ct = C.transpose();
+
+  J = (Ct*C).inverse()*Ct;
+}
 
 // JACOBIAN VIA C.P.'s to minimize slip in odometry
 // USE Jt_cp to minimize contact forces

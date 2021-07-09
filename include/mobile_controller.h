@@ -14,7 +14,8 @@ class MobileController
     public:
         MobileController(const double hz); 
         ~MobileController(){};
-
+        
+        // get the raw data from the robot or simulator
         void readJoint(const VectorQd &q, const VectorQd &q_dot, const VectorQd &tau);
         void readBase(const Vector3d &x, const Vector3d &x_dot, const Vector3d &f);
 
@@ -34,18 +35,20 @@ class MobileController
         VectorQd q_, q_dot_, q_ddot_;   // phi, rho
         VectorQd q_init_, q_dot_init_;  // init values
         VectorQd qd_, qd_dot_, qd_ddot_;
-        VectorQd tau_, taud_;
+        VectorQd tau_, taud_, tau_null_;
         VectorQd q_dot_hat_; // computed by Jacobian
-        
+        VectorQd q_filter_, q_dot_filter_, q_prev_, q_dot_prev_; // for using a low pass filter
+
         // OP-SPACE PARAMETERS(i.e., mobile base)
         Eigen::Vector3d x_, x_dot_, x_ddot_; // x, y, theta
         Eigen::Vector3d x_init_, x_dot_init_;
         Eigen::Vector3d xd_, xd_dot_, xd_ddot_;
         Eigen::Vector3d f_, fd_;
+        Eigen::Vector3d x_filter_, x_dot_filter_, x_prev_, x_dot_prev_; // for using a low pass filter
 
         // DYNAMICS PARAMETERS
-        MatrixQtd J_;
-        MatrixQd Jt_;
+        MatrixQtd Jcp_, J_;
+        MatrixQd Jcpt_, Jt_;
         MatrixQd C_; // wheel constraint matrix
         Eigen::Matrix3d Lambda_;
         Eigen::Vector3d Mu_;
@@ -66,7 +69,9 @@ class MobileController
     private:        
         void printState();
         void saveState();
-        
+        void prev();
+        void doLowPassFilter();
+
         // save current joint values
         std::ofstream pcv_q {"pcv_q.txt"};
         std::ofstream pcv_q_dot {"pcv_q_dot.txt"};
@@ -82,6 +87,8 @@ class MobileController
         std::ofstream pcv_xd {"pcv_xd.txt"};
         std::ofstream pcv_xd_dot {"pcv_xd_dot.txt"};
         std::ofstream pcv_fd {"pcv_fd.txt"};
+
+        std::ofstream debug{"debug.txt"};
 
 
 };

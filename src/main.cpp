@@ -13,7 +13,7 @@ int main()
 	VRepBridge vb(VRepBridge::CTRL_TORQUE); // Torque controlled
 	// VRepBridge vb(VRepBridge::CTRL_POSITION); // Position controlled 
 	// VRepBridge vb((VRepBridge::ControlMode::CTRL_POSITION)
-	const double hz = 1000 ;
+	const double hz = 200.0 ;
 	MobileController mc(hz);
 	bool is_simulation_run = true;
 	bool exit_flag = false;
