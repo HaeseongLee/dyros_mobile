@@ -2,7 +2,7 @@
 
 
 MobileController::MobileController(const double hz) : 
-tick_(0), play_time_(0.0), hz_(hz), control_mode_("op_control"), is_mode_changed_(false)
+tick_(0), play_time_(0.0), hz_(hz), control_mode_("none"), is_mode_changed_(false)
 {
   veh_.Add_Solid(  0.000,  0.000,  XR_Mv, XR_Iv);
   veh_.Add_Caster(0,  XR_l,  XR_w, 0*M_PI_2); // front left 
@@ -101,9 +101,9 @@ void MobileController::compute()
     taud_ = Jcpt_*(Lambda_*f_star_zero_ + Mu_);
     
     //***** DEBUG *****//
-    VectorQd q_dot_debug;
-    q_dot_debug = C_*xd_dot_;
-    debug << q_dot_debug.transpose()<<std::endl;
+    // VectorQd q_dot_debug;
+    // q_dot_debug = C_*xd_dot_;
+    // debug << q_dot_debug.transpose()<<std::endl;
 
   }
   else if(control_mode_  == "steer_control")
@@ -166,9 +166,18 @@ void MobileController::compute()
   }
 
 
+  else if (control_mode_ == "none")
+  {
+    tau_null_ = 5.0*(q_init_ - q_) + 0.1*(q_dot_init_ - q_dot_init_);
+    tau_null_ = (Eigen::Matrix8d::Identity() - Jcpt_*Jcp_)*tau_null_;
+
+    f_star_zero_ = 20*(x_init_ - x_) + 10*(x_dot_init_ - x_dot_);
+    taud_ = Jcpt_*(Lambda_*f_star_zero_ + Mu_) + tau_null_;    
+  }
+
   prev();
 
-  if(control_mode_ != "none") saveState();
+  // if(control_mode_ != "none") saveState();
   printState();
 
   tick_++;
@@ -217,14 +226,18 @@ void MobileController::readBase(const Vector3d &x, const Vector3d &x_dot, const 
 
 void MobileController::setInitialJoint(const VectorQd &q, const VectorQd &q_dot)
 {
-  q_init_ = q;
-  q_dot_init_ = q_dot;
+  // q_init_ = q;
+  // q_dot_init_ = q_dot;
+  q_init_.setZero();
+  q_dot_init_.setZero();
 }
 
 void MobileController::setInitialBase(const Vector3d &x, const Vector3d &x_dot)
 {
-  x_init_ = x;
-  x_dot_init_ = x_dot;
+  // x_init_ = x;
+  // x_dot_init_ = x_dot;
+  x_init_.setZero();
+  x_dot_init_.setZero();
 }
 
 
