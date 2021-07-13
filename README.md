@@ -1,11 +1,11 @@
 # dyros_mobile
 # 설치 방법
-git clone 
-cd powered_caster_vehicle
-mkdir build
-cd build
-cmake ..
-make
+1. git clone https://github.com/HaeseongLee/dyros_mobile.git
+2. cd powered_caster_vehicle
+3. mkdir build
+4. cd build
+5. cmake ..
+6. make
 
 # CoppelisaSim 사용 방법
 1. roscore 실행
