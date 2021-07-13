@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(powered_caster_vehicle)
 
-
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(catkin REQUIRED COMPONENTS    
     roscpp
@@ -19,32 +20,23 @@ catkin_package(
 find_package(PkgConfig QUIET)
 find_package(Eigen3 REQUIRED)
 
-
-set (VREP_ROOT
-    $ENV{HOME}/Downloads/CoppeliaSim_Edu_V4_2_0_Ubuntu18_04/
-    CACHE "VRep root dir" STRING)
-
 include_directories(
+  include
   ${catkin_INCLUDE_DIR}
   ${EIGEN3_INCLUDE_DIR}   
-  ${VREP_ROOT}/programming/include 
-  ${VREP_ROOT}/programming/remoteApi
+  coppelia_src/remoteApi
+  coppelia_src/include
 )
-
-
-include_directories (${VREP_PATH}/remoteApi ${VREP_PATH}/include include)
 
 add_definitions (-DNON_MATLAB_PARSING)
 add_definitions (-DMAX_EXT_API_CONNECTIONS=255)
 #add_definitions (-DDO_NOT_USE_SHARED_MEMORY)
 
-# set (HEADS
-#   # include/pcv/controller.h
-#   include/powered_caster_vehicle/vrep_bridge.h
-
-#   # include/utils/math_type_define.h
-#   include/utils/linux_terminal_tool
-# )
+set (COPPELIA_SRC
+  coppelia_src/remoteApi/extApi.c
+  coppelia_src/remoteApi/extApiPlatform.c
+  coppelia_src/common/shared_memory.c
+)
 
 set (SOURCES
 	src/main.cpp
@@ -56,13 +48,9 @@ set (SOURCES
   include/math_type_define.h
   include/linux_terminal_tool
   include/pcv_mtx_utils.h
-
-	${VREP_ROOT}/programming/remoteApi/extApi.c
-	${VREP_ROOT}/programming/remoteApi/extApiPlatform.c
-	${VREP_ROOT}/programming/common/shared_memory.c
 )
 
-add_executable(powered_caster_vehicle ${SOURCES})
+add_executable(powered_caster_vehicle ${SOURCES} ${COPPELIA_SRC})
 
 target_link_libraries(powered_caster_vehicle	
 	pthread
@@ -70,6 +58,4 @@ target_link_libraries(powered_caster_vehicle
 )
 # 
 
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_BUILD_TYPE RELEASE)
