@@ -1,0 +1,9 @@
+[submodule "coppelia_src/common"]
+	path = coppelia_src/common
+	url = https://github.com/CoppeliaRobotics/common.git
+[submodule "coppelia_src/include"]
+	path = coppelia_src/include
+	url = https://github.com/CoppeliaRobotics/include.git
+[submodule "coppelia_src/remoteApi"]
+	path = coppelia_src/remoteApi
+	url = https://github.com/CoppeliaRobotics/remoteApi.git
